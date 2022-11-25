@@ -1,8 +1,23 @@
-const soma = (req, res) => {
-  const soma = 100 + 1;
+const create = (req, res) => {
+  const { name, username, email, password, avatar, background } = req.body; // passa o corpo de requisicao(JSON)
 
-  res.send({ soma: soma });
+  if (!name || !username || !email || !password || !avatar || !background) {
+    // casp de campo nao preenchido
+    res.status(400).send({message: 'Submit all fields to registration'});
+  }
+
+  res.status(201).send({
+    message : "User created successfully",
+
+    user : {
+        name,
+        username,
+        email,
+        avatar,
+        background
+    } 
+    
+  });
 };
 
-
-module.exports = {soma};
+module.exports = { create };
