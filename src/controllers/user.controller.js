@@ -1,5 +1,4 @@
 const userService = require("../services/user.service");
-const mongoose = require("mongoose");
 
 const create = async (req, res) => {
   const { name, username, email, password, avatar, background } = req.body; // passa o corpo de requisicao(JSON)
@@ -41,15 +40,9 @@ const findAll = async (req, res) => {
 };
 
 const findById = async (req, res) => {
-  const id = req.params.id;
 
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(400).send({ message: "Invalid id" });
-
-  const user = await userService.findById(id);
-
-  if (!user) return res.status(400).send({ message: `User ${id} not found` });
-
+  /* O middleware validId verificou o id do parametro, passou para o validUser, e o validUser passa como parametro da req, o user encontrado */
+  const user = req.user;
   return res.send(user);
 };
 
@@ -61,15 +54,7 @@ const update = async (req, res) => {
       .send({ message: "Submit at least one field to update" });
   }
 
-  const id = req.params.id;
-
-  if (!mongoose.Types.ObjectId.isValid(id))
-    return res.status(400).send({ message: "invalid id" });
-
-  const user = await userService.findById(id);
-
-  if (!user) return res.status(400).send({ message: "user not found" });
-
+  const {id, user} = req;
   await userService.update(
     id,
     name,
