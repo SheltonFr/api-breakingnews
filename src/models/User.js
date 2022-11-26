@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
     password: {
         type: String,
         required: true,
-        select: true, // para que na seja retornada nas consultas a base de dados
+        select: false, // para que na seja retornada nas consultas a base de dados
     },
     avatar: {
         type: String,
