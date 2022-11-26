@@ -1,6 +1,7 @@
 {
   "name": "api-breakingnews",
   "version": "1.0.0",
+  "type": "module",
   "description": "API for breaking news",
   "main": "index.js",
   "scripts": {

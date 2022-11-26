@@ -1,4 +1,4 @@
-const User = require("../models/User");
+import User from "../models/User.js"
 
 const create = (body) => {
   /** create() -> metodo do mongoose que cria um scheema dentro do padrao ja definido */
@@ -15,4 +15,4 @@ const update = (id, name, username, email, password, avatar, background) =>
     { name, username, email, password, avatar, background }
   );
 
-module.exports = { create, findAll, findById, update };
+export default  { create, findAll, findById, update };
