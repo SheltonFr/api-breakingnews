@@ -45,7 +45,9 @@ UserSchema.pre('save', async function (next) {
     antes de se realizar o proimo passo(salvar)*/
 
     next();
-})
+});
+
+
 
 const User = mongoose.model("User", UserSchema);
 
