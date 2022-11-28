@@ -20,4 +20,4 @@ app.use(express.json()); // permite que sejam feitas requisicaoes reebendo JSON
 app.use("/users", userRoute);
 app.use("/auth", authRouter)
 
-app.listen(port, () => console.log(`Servidor rodando na porta ${port}`));
+app.listen(port, () => console.log(`Server runnign at ${port} port`));

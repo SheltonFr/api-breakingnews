@@ -1,5 +1,5 @@
 import User from "../models/User.js"
-
+ 
 const create = (body) => {
   /** create() -> metodo do mongoose que cria um scheema dentro do padrao ja definido */
   return User.create(body);
@@ -14,5 +14,6 @@ const update = (id, name, username, email, password, avatar, background) =>
     { _id: id },
     { name, username, email, password, avatar, background }
   );
+
 
 export default  { create, findAll, findById, update };

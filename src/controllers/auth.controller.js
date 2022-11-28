@@ -1,6 +1,7 @@
 import bcrypt from "bcrypt";
 
-import { findByEmail } from "../services/auth.service.js";
+
+import { findByEmail, generateToken } from "../services/auth.service.js";
 
 const login = async (req, res) => {
   try {
@@ -17,7 +18,9 @@ const login = async (req, res) => {
         return res.status(400).send({ message:"Email or password do not match"});
     }
 
-    res.send("Login Ok");
+    const token = generateToken(user._id);
+
+    res.send({token});
 
   } catch (err) {
     res.status(500).send(err.message);
