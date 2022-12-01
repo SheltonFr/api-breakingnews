@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { ObjectId } from 'mongoose';
 
 const NewsSchema = mongoose.Schema({
     title: {
@@ -21,10 +22,10 @@ const NewsSchema = mongoose.Schema({
         default: Date.now()
     },
 
-    user:{// "Chave estrangeira"
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User", // nome do schema da colllecao(tabela) User
-        required: true
+    user: {
+        ref: 'user',
+        type: mongoose.Types.ObjectId,
+        require: true
     },
 
     likes:{
