@@ -1,23 +1,26 @@
 import newsService from "../services/news.service.js";
-import { ObjectId } from "mongoose";
 const create = async (req, res) => {
   try {
+    
     const { title, text, banner } = req.body;
+    const userId = req.userId;
 
-    if(!title || !text || !banner){
-        return res.status(400).send({ message: "Submit all filds for registration!" });
+    if (!title || !text || !banner) {
+      return res
+        .status(400)
+        .send({ message: "Submit all filds for registration!" });
     }
 
     await newsService.create({
-        title,
-        text,
-        banner,
-        user: {_id: '6388d688a7ddfb79746270a1'}
+      title,
+      text,
+      banner,
+      user: userId,
     });
 
     res.status(201).send("Created");
   } catch (err) {
-    res.status(500).send({message: err.message});
+    res.status(500).send({ message: err.message });
   }
 };
 
