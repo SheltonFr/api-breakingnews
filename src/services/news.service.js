@@ -9,4 +9,6 @@ const findAll = (offset, limit) =>
 
 const countNews = () => News.count();
 
-export default { create, findAll, countNews };
+const topNews = () => News.findOne().sort({ _id: -1 }).populate("user");
+
+export default { create, findAll, countNews, topNews };
