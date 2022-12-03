@@ -23,8 +23,8 @@ const NewsSchema = mongoose.Schema({
     },
 
     user: {
-        ref: 'user',
         type: mongoose.Types.ObjectId,
+        ref: 'User',
         require: true
     },
 

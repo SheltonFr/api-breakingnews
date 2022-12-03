@@ -1,7 +1,6 @@
 import newsService from "../services/news.service.js";
 const create = async (req, res) => {
   try {
-    
     const { title, text, banner } = req.body;
     const userId = req.userId;
 
@@ -25,8 +24,45 @@ const create = async (req, res) => {
 };
 
 const findAll = async (req, res) => {
-  const news = await newsService.findAll();
-  res.status(201).send(news);
+  // pegando query parameters(chegam como string)
+  let { limit, offset } = req.query;
+
+  // insere valores padrao, caso nao sejam passados na url
+  limit = (!limit) ? 5 : Number(limit);;
+  offset = (!offset) ? 0 : Number(offset);
+
+  const news = await newsService.findAll(offset, limit);
+  const total = await newsService.countNews();
+  const currentUrl = req.baseUrl; // pega a url de requisicao(no caso: /news)
+
+  const next = offset + limit;
+  const previous = offset - limit < 0 ? null : offset - limit;
+  const nextUrl = (next < total) ? `${currentUrl}?limit=${limit}&offset=${next}` : null;
+  const previousUrl = previous != null ? `${currentUrl}?limit=${limit}&offset=${previous}` : null;
+
+ 
+  
+  res.status(201).send({
+    nextUrl,
+    previousUrl,
+    limit,
+    offset,
+    total,
+
+    // retornara uma lista de campos para cada news
+    result: news.map((item) => ({
+      id: item._id,
+      title: item.title,
+      text: item.text,
+      banner: item.banner,
+      likes: item.likes,
+      postedAt: item.createdAt,
+      comments: item.comments,
+      userName: item.user.username,
+      name: item.user.name,
+      userAvatar: item.user.avatar
+    }))
+  });
 };
 
 export default { create, findAll };
