@@ -220,6 +220,23 @@ const likeNews = async (req, res) => {
   }
 };
 
+const addComments = async (req, res) => {
+  try {
+    const newsId = req.id;
+    const userId = req.userId;
+    const comment = req.body
+
+    if(!comment) return res.status(400).send({ message: "Write a message to comment!" });
+
+    await newsService.addComments(newsId, comment ,userId);
+
+    res.send({ message: "Comment added successfully!" });
+
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
 export {
   create,
   findAll,
@@ -230,4 +247,5 @@ export {
   update,
   deleteById,
   likeNews,
+  addComments,
 };

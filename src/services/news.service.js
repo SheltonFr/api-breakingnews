@@ -42,11 +42,25 @@ const likeNews = (newsId, userId) =>
     // nin(not in)
     // pesquisa o document, pega o a lista de likes.userId, e prossegindo caso userId do parametro nao exita na lista (um user so pode dar um like por noticia)
     { _id: newsId, "likes.userId": { $nin: [userId] } },
-    { $push: { likes: { userId, created: new Date() } } }
+    { $push: { likes: { userId, createdAt: new Date() } } }
   );
 
 const deleteLike = (newsId, userId) =>
   News.findOneAndUpdate({ _id: newsId }, { $pull: { likes: { userId } } });
+
+const addComments = (newsId, comment, userId) => {
+  // gerando ids para comentarios
+  const commentId = Math.floor(Date.now() * Math.random()).toString(36);
+
+  return News.findOneAndUpdate(
+    { _id: newsId },
+    {
+      $push: {
+        comments: { commentId, userId, comment, createdAt: new Date() },
+      },
+    }
+  );
+};
 
 export default {
   create,
@@ -60,4 +74,5 @@ export default {
   deleteById,
   likeNews,
   deleteLike,
+  addComments,
 };
