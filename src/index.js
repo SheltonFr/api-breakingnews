@@ -2,7 +2,7 @@ import express from "express";
 import connectDatabase from "./database/db.js";
 import dotenv from "dotenv"
 
-// rotas
+// rotas da api
 import userRoute from "./routes/user.rout.js";
 import authRouter from "./routes/auth.rout.js";
 import newsRouter from "./routes/news.route.js";
