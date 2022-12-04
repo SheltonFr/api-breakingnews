@@ -1,11 +1,11 @@
 import express from "express";
-import connectDatabase from "./database/db.js";
+import connectDatabase from "./src/database/db.js";
 import dotenv from "dotenv"
 
 // rotas
-import userRoute from "./routes/user.rout.js";
-import authRouter from "./routes/auth.rout.js";
-import newsRouter from "./routes/news.route.js";
+import userRoute from "./src/routes/user.rout.js";
+import authRouter from "./src/routes/auth.rout.js";
+import newsRouter from "./src/routes/news.route.js";
 // import swaggerRouter from "./routes/swagger.rout.js"
 
 
