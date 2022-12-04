@@ -23,9 +23,25 @@ const searchByTitle = (title) =>
 
 const findByUser = (userId) =>
   News.find({
-    user: userId
+    user: userId,
   })
     .sort({ _id: -1 })
     .populate("user");
 
-export default { create, findAll, countNews, topNews, findById, searchByTitle, findByUser };
+const update = (idNews, title, text, banner) =>
+  News.findOneAndUpdate(
+    { _id: idNews },
+    { title, text, banner },
+    { rowResult: true }
+  );
+
+export default {
+  create,
+  findAll,
+  countNews,
+  topNews,
+  findById,
+  searchByTitle,
+  findByUser,
+  update,
+};

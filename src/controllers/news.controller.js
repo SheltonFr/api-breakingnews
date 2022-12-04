@@ -158,7 +158,7 @@ const byUser = async (req, res) => {
       return res.send({ message: `This user has not new avalables` });
 
     res.send({
-      result: news.map(item => ({
+      result: news.map((item) => ({
         id: item._id,
         title: item.title,
         text: item.text,
@@ -169,11 +169,35 @@ const byUser = async (req, res) => {
         userName: item.user.username,
         name: item.user.name,
         userAvatar: item.user.avatar,
-      }))
-    })
+      })),
+    });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
 };
 
-export { create, findAll, topNews, findById, searchByTitle, byUser };
+const update = async (req, res) => {
+  try {
+    const { title, text, banner } = req.body;
+
+    //{id da noticia, a noticia, usuario logado}
+    const { id, news, userId } = req;
+
+    if (!title && !text && !banner)
+      return res
+        .status(404)
+        .send({ message: "Submit at least one field to update" });
+
+    if (!userId.equals(news.user._id))
+      return res
+        .status(401)
+        .send({ message: "Only the owner can update this news!" });
+
+    await newsService.update(id, title, text, banner);
+    res.send({ message: "News updated successfully!" });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+export { create, findAll, topNews, findById, searchByTitle, byUser, update };
