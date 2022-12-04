@@ -1,14 +1,12 @@
-// import { Router } from "express";
-// import swaggerUI from "swagger-ui-express";
-// // import swaggerJson from "../swagger.json";
+import { Router } from "express";
+import swaggerUI from "swagger-ui-express";
+import swaggerJson from "../swagger.json"
 
-// // const swaggerJson = await import("../swagger.json", {
-// //     assert: { type: "json" },
-// //   });
+const router = Router();
 
-// const router = Router();
 
-// router.use("/", swaggerUI.serve);
-// router.get("/", swaggerUI.setup(swaggerJson));
+router.use("/", swaggerUI.serve)
+router.get("/", swaggerUI.setup(swaggerJson))
 
-// export default router;
+export default router;
+
