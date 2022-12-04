@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import userService from "../services/user.service.js";
+import newsService from "../services/news.service.js";
 
 export const validId = (req, res, next) => {
   const id = req.params.id;
@@ -21,4 +22,16 @@ export const validUser = async (req, res, next) => {
   // envia os parametros como requisicao para a funcao next
   req.user = user;
   next();
+};
+
+export const validNews = async (req, res, next) => {
+  try {
+    const id = req.id;
+    const news = await newsService.findById(id);
+    if (!news) return res.status(400).send({ message: `News ${id} not found` });
+    req.news = news;
+    next();
+  } catch (error) {
+    res.status(500).send({ message: error.message});
+  }
 };

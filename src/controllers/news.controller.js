@@ -1,4 +1,6 @@
 import newsService from "../services/news.service.js";
+
+
 const create = async (req, res) => {
   try {
     const { title, text, banner } = req.body;
@@ -23,6 +25,8 @@ const create = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
+
+
 
 const findAll = async (req, res) => {
   // pegando query parameters(chegam como string)
@@ -74,6 +78,7 @@ const findAll = async (req, res) => {
   }
 };
 
+
 const topNews = async (req, res) => {
   try {
     const news = await newsService.topNews();
@@ -99,4 +104,22 @@ const topNews = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
-export default { create, findAll, topNews };
+
+const findById = async (req, res) => {
+  const news = req.news;
+  res.send({
+    news: {
+      id: news._id,
+      title: news.title,
+      text: news.text,
+      banner: news.banner,
+      likes: news.likes,
+      postedAt: news.createdAt,
+      comments: news.comments,
+      userName: news.user.username,
+      name: news.user.name,
+      userAvatar: news.user.avatar,
+    },
+  });
+}
+export default { create, findAll, topNews, findById };
