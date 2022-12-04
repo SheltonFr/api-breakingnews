@@ -13,4 +13,10 @@ const countNews = () => News.count();
 
 const topNews = () => News.findOne().sort({ _id: -1 }).populate("user");
 
-export default { create, findAll, countNews, topNews, findById };
+const searchByTitle = (title) =>
+  News.find({
+    // i - case insensitive
+    title: { $regex: `${title || ""}`, $options: 'i' },
+  }).sort({_id: -1}).populate('user');
+
+export default { create, findAll, countNews, topNews, findById, searchByTitle };

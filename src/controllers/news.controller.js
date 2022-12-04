@@ -1,6 +1,5 @@
 import newsService from "../services/news.service.js";
 
-
 const create = async (req, res) => {
   try {
     const { title, text, banner } = req.body;
@@ -25,8 +24,6 @@ const create = async (req, res) => {
     res.status(500).send({ message: err.message });
   }
 };
-
-
 
 const findAll = async (req, res) => {
   // pegando query parameters(chegam como string)
@@ -78,7 +75,6 @@ const findAll = async (req, res) => {
   }
 };
 
-
 const topNews = async (req, res) => {
   try {
     const news = await newsService.topNews();
@@ -121,5 +117,35 @@ const findById = async (req, res) => {
       userAvatar: news.user.avatar,
     },
   });
-}
-export default { create, findAll, topNews, findById };
+};
+
+const searchByTitle = async (req, res) => {
+  try {
+    // o titulo sera recebido atraves de query parameters
+    const { title } = req.query;
+    const news = await newsService.searchByTitle(title);
+
+    if (news.length === 0)
+      return res
+        .status(400)
+        .send({ message: `There are not news with this title!` });
+
+    res.send({
+      result: news.map((item) => ({
+        id: item._id,
+        title: item.title,
+        text: item.text,
+        banner: item.banner,
+        likes: item.likes,
+        postedAt: item.createdAt,
+        comments: item.comments,
+        userName: item.user.username,
+        name: item.user.name,
+        userAvatar: item.user.avatar,
+      })),
+    });
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+export { create, findAll, topNews, findById, searchByTitle };

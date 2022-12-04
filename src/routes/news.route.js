@@ -1,15 +1,18 @@
 import { Router } from "express";
-import newsController from "../controllers/news.controller.js";
+import {create, findAll, topNews, findById, searchByTitle} from "../controllers/news.controller.js";
 import { authMiddleware } from "../middlewares/auth.middlewares.js";
 import { validId, validNews } from "../middlewares/global.middlewares.js";
 
 const router = Router();
 
 
-router.post("/", authMiddleware, newsController.create);
-router.get("/", newsController.findAll);
-router.get("/top", newsController.topNews)
-router.get("/:id", validId, validNews, newsController.findById);
+router.post("/", authMiddleware, create);
+router.get("/", findAll);
+router.get("/top", topNews)
+router.get("/search", searchByTitle);
+
+router.get("/:id", authMiddleware, validId, validNews, findById);
+
 
 
 export default router;
