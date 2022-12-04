@@ -32,6 +32,21 @@ export const validNews = async (req, res, next) => {
     req.news = news;
     next();
   } catch (error) {
-    res.status(500).send({ message: error.message});
+    res.status(500).send({ message: error.message });
+  }
+};
+
+export const verifyNewsOwner = async (req, res, next) => {
+  try {
+    const { id, news, userId } = req;
+
+    if (!userId.equals(news.user._id))
+      return res
+        .status(401)
+        .send({ message: "Only the owner can perform this action!" });
+
+    next();
+  } catch (error) {
+    res.status(500).send({ message: error.message });
   }
 };

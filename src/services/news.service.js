@@ -35,6 +35,7 @@ const update = (idNews, title, text, banner) =>
     { rowResult: true }
   );
 
+const deleteById = (idNews) => News.remove({_id: idNews})
 export default {
   create,
   findAll,
@@ -44,4 +45,5 @@ export default {
   searchByTitle,
   findByUser,
   update,
+  deleteById,
 };

@@ -178,21 +178,15 @@ const byUser = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { title, text, banner } = req.body;
-
-    //{id da noticia, a noticia, usuario logado}
-    const { id, news, userId } = req;
+    const { title, text, banner } = req.body
 
     if (!title && !text && !banner)
       return res
         .status(404)
         .send({ message: "Submit at least one field to update" });
 
-    if (!userId.equals(news.user._id))
-      return res
-        .status(401)
-        .send({ message: "Only the owner can update this news!" });
 
+    const newsId = req.id;
     await newsService.update(id, title, text, banner);
     res.send({ message: "News updated successfully!" });
   } catch (error) {
@@ -200,4 +194,24 @@ const update = async (req, res) => {
   }
 };
 
-export { create, findAll, topNews, findById, searchByTitle, byUser, update };
+const deleteById = async (req, res) => {
+  try {
+    const id = req.id;
+    await newsService.deleteById(id);
+    res.send({ message: "News deleted successfully!" });
+   
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+export {
+  create,
+  findAll,
+  topNews,
+  findById,
+  searchByTitle,
+  byUser,
+  update,
+  deleteById,
+};
