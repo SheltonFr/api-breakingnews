@@ -35,7 +35,19 @@ const update = (idNews, title, text, banner) =>
     { rowResult: true }
   );
 
-const deleteById = (idNews) => News.remove({_id: idNews})
+const deleteById = (idNews) => News.remove({ _id: idNews });
+
+const likeNews = (newsId, userId) =>
+  News.findOneAndUpdate(
+    // nin(not in)
+    // pesquisa o document, pega o a lista de likes.userId, e prossegindo caso userId do parametro nao exita na lista (um user so pode dar um like por noticia)
+    { _id: newsId, "likes.userId": { $nin: [userId] } },
+    { $push: { likes: { userId, created: new Date() } } }
+  );
+
+const deleteLike = (newsId, userId) =>
+  News.findOneAndUpdate({ _id: newsId }, { $pull: { likes: { userId } } });
+
 export default {
   create,
   findAll,
@@ -46,4 +58,6 @@ export default {
   findByUser,
   update,
   deleteById,
+  likeNews,
+  deleteLike,
 };

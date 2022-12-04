@@ -178,13 +178,12 @@ const byUser = async (req, res) => {
 
 const update = async (req, res) => {
   try {
-    const { title, text, banner } = req.body
+    const { title, text, banner } = req.body;
 
     if (!title && !text && !banner)
       return res
         .status(404)
         .send({ message: "Submit at least one field to update" });
-
 
     const newsId = req.id;
     await newsService.update(id, title, text, banner);
@@ -199,7 +198,23 @@ const deleteById = async (req, res) => {
     const id = req.id;
     await newsService.deleteById(id);
     res.send({ message: "News deleted successfully!" });
-   
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+const likeNews = async (req, res) => {
+  try {
+    const newsId = req.id;
+    const userId = req.userId;
+    const likedNews = await newsService.likeNews(newsId, userId);
+
+    if (!likedNews) {
+      await newsService.deleteLike(newsId, userId);
+      return res.status(200).send({ message: "Like removed successfully!" });
+    }
+
+    res.status(200).send({ message: "Liked setted successfully!" });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
@@ -214,4 +229,5 @@ export {
   byUser,
   update,
   deleteById,
+  likeNews,
 };
