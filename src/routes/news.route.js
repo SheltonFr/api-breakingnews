@@ -17,7 +17,8 @@ import {
   update,
   deleteById,
   likeNews,
-  addComments
+  addComments,
+  deleteComments,
 } from "../controllers/news.controller.js";
 
 const router = Router();
@@ -47,5 +48,6 @@ router.delete(
 );
 router.patch("/like/:id", authMiddleware, validId, validNews, likeNews); //like
 router.patch("/comment/:id", authMiddleware, validId, validNews, addComments); //add comments
+router.patch("/comment/:id/:commentId", authMiddleware, validId, validNews, deleteComments); //add comments
 
 export default router;

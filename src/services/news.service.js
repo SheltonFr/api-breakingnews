@@ -62,6 +62,12 @@ const addComments = (newsId, comment, userId) => {
   );
 };
 
+const deleteComments = (newsId, commentId, userId) =>
+  News.findOneAndUpdate(
+    { _id: newsId },
+    { $pull: { comments: { commentId, userId } } }
+  );
+
 export default {
   create,
   findAll,
@@ -75,4 +81,5 @@ export default {
   likeNews,
   deleteLike,
   addComments,
+  deleteComments,
 };

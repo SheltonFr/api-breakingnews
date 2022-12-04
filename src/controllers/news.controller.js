@@ -224,7 +224,7 @@ const addComments = async (req, res) => {
   try {
     const newsId = req.id;
     const userId = req.userId;
-    const comment = req.body
+    const {comment} = req.body
 
     if(!comment) return res.status(400).send({ message: "Write a message to comment!" });
 
@@ -237,6 +237,19 @@ const addComments = async (req, res) => {
   }
 };
 
+const deleteComments = async (req, res) => {
+  try {
+    const newsId = req.id;
+    const commentId = req.params.commentId;
+    const userId = req.userId;
+    
+    await newsService.deleteComments(newsId, commentId, userId);
+    res.send({ message: "Comment removed successfully!" });
+
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
 export {
   create,
   findAll,
@@ -248,4 +261,5 @@ export {
   deleteById,
   likeNews,
   addComments,
+  deleteComments
 };
