@@ -148,4 +148,32 @@ const searchByTitle = async (req, res) => {
     return res.status(500).send({ message: error.message });
   }
 };
-export { create, findAll, topNews, findById, searchByTitle };
+
+const byUser = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const news = await newsService.findByUser(userId);
+
+    if (news.length === 0)
+      return res.send({ message: `This user has not new avalables` });
+
+    res.send({
+      result: news.map(item => ({
+        id: item._id,
+        title: item.title,
+        text: item.text,
+        banner: item.banner,
+        likes: item.likes,
+        postedAt: item.createdAt,
+        comments: item.comments,
+        userName: item.user.username,
+        name: item.user.name,
+        userAvatar: item.user.avatar,
+      }))
+    })
+  } catch (error) {
+    return res.status(500).send({ message: error.message });
+  }
+};
+
+export { create, findAll, topNews, findById, searchByTitle, byUser };

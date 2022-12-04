@@ -16,7 +16,16 @@ const topNews = () => News.findOne().sort({ _id: -1 }).populate("user");
 const searchByTitle = (title) =>
   News.find({
     // i - case insensitive
-    title: { $regex: `${title || ""}`, $options: 'i' },
-  }).sort({_id: -1}).populate('user');
+    title: { $regex: `${title || ""}`, $options: "i" },
+  })
+    .sort({ _id: -1 })
+    .populate("user");
 
-export default { create, findAll, countNews, topNews, findById, searchByTitle };
+const findByUser = (userId) =>
+  News.find({
+    user: userId
+  })
+    .sort({ _id: -1 })
+    .populate("user");
+
+export default { create, findAll, countNews, topNews, findById, searchByTitle, findByUser };
