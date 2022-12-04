@@ -1,0 +1,139 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Bracking News API documentation",
+        "description": "In this documentation, you'll be able to consult the API endpoints and also test all available routes. Do not forget to register and carry out the authorization",
+        "contact": {
+            "email": "sheltonfjs@gmail.com",
+            "whatsapp": "+258 862 690 420"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:3000",
+            "description": "Local Server "
+        }
+    ],
+    "paths": {
+        "/users/": {
+            "post": {
+                "sumary": "Create a new user",
+                "description": "Route responsible for criating a new user",
+                "tags": [
+                    "Users"
+                ],
+                "requestBody": {
+                    "content": {
+                        "applications/json": {
+                            "schema": {
+                                "$ref": "#/components/schema/User"
+                            },
+                            "examples": {
+                                "Users": {
+                                    "value": {
+                                        "name": "Sumaya Malalane",
+                                        "username": "sumaya",
+                                        "password": "0000",
+                                        "email": "sm@gmail.com",
+                                        "avatar": "https://avatars.githubusercontent.com/u/104297128?s=400&u=5a9754a9cd72609de6a4f360e65c548b3308b61f&v=4",
+                                        "background": "https://imgur.com/If1JaaE"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "400": {
+                        "description": "Not found"
+                    },
+                    "201": {
+                        "description": "Created",
+                        "content": {
+                            "applications/json": {
+                                "schema": {
+                                    "type": "object",
+                                    "$ref": "#/components/schema/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/users": {},
+        "/users/{id}/": {},
+        "/users/{id}": {},
+        "/auth/": {},
+        "/news/": {},
+        "/news/top/": {},
+        "/news/search/": {},
+        "/news/byUSer": {},
+        "/news/{id}/": {},
+        "/news/{id}": {},
+        "/news/like/{id}/": {},
+        "/news/comment/{id}": {},
+        "/news/comment/{id}/{commentId}": {}
+    },
+    "components": {
+        "securitySchemes": {
+            "bearerAuth": {
+                "type": "http",
+                "scheme": "bearer",
+                "bearerFormat": "JWT"
+            }
+        },
+        "schemas": {
+            "User": {
+                "type": "object",
+                "properties": {
+                    "name": {
+                        "type": "string"
+                    },
+                    "username": {
+                        "type": "string"
+                    },
+                    "email": {
+                        "type": "string"
+                    },
+                    "password": {
+                        "type": "string"
+                    },
+                    "avatar": {
+                        "type": "string"
+                    },
+                    "background": {
+                        "type": "string"
+                    }
+                }
+            }
+        },
+        "News": {
+            "type": "object",
+            "properties": {
+                "user": {
+                    "type": "string"
+                },
+                "banner": {
+                    "type": "string"
+                },
+                "title": {
+                    "type": "string"
+                },
+                "text": {
+                    "type": "string"
+                },
+                "likes": {
+                    "type": "array"
+                },
+                "comments": {
+                    "type": "array"
+                },
+                "createdAt": {
+                    "type": "date"
+                }
+            }
+        }
+    }
+}

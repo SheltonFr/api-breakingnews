@@ -6,6 +6,7 @@ import dotenv from "dotenv"
 import userRoute from "./src/routes/user.rout.js";
 import authRouter from "./src/routes/auth.rout.js";
 import newsRouter from "./src/routes/news.route.js";
+import swaggerRouter from "./src/routes/swagger.rout.js"
 
 
 dotenv.config(); // habilita variaveis de ambiente
@@ -21,5 +22,6 @@ app.use(express.json()); // permite que sejam feitas requisicaoes reebendo JSON
 app.use("/users", userRoute);
 app.use("/auth", authRouter);
 app.use("/news", newsRouter);
+app.use("/doc", swaggerRouter)
 
-app.listen(port, () => console.log(`Server runnign at ${port} port`));
+app.listen(port, () => console.log(`Server runnign on port: ${port}`));
