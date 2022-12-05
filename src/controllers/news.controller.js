@@ -49,7 +49,7 @@ const findAll = async (req, res) => {
         ? `${currentUrl}?limit=${limit}&offset=${previous}`
         : null;
 
-    res.status(201).send({
+    res.send({
       nextUrl,
       previousUrl,
       limit,

@@ -291,6 +291,45 @@
                 }
             }
         },
+        "/news": {
+            "get": {
+                "summary": "List all News",
+                "description": "Route resposible for listing News",
+                "tags": [
+                    "News"
+                ],
+                "parameters": [
+                    {
+                        "in": "query",
+                        "name": "limit",
+                        "type": "string"
+                    },
+                    {
+                        "in": "query",
+                        "name": "offset",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "400": {
+                        "description": "Not Found"
+                    },
+                    "200": {
+                        "description": "Ok",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/News"
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/news/top/": {},
         "/news/search/": {},
         "/news/byUSer": {},
@@ -331,31 +370,31 @@
                         "type": "string"
                     }
                 }
-            }
-        },
-        "News": {
-            "type": "object",
-            "properties": {
-                "user": {
-                    "type": "string"
-                },
-                "banner": {
-                    "type": "string"
-                },
-                "title": {
-                    "type": "string"
-                },
-                "text": {
-                    "type": "string"
-                },
-                "likes": {
-                    "type": "array"
-                },
-                "comments": {
-                    "type": "array"
-                },
-                "createdAt": {
-                    "type": "date"
+            },
+            "News": {
+                "type": "object",
+                "properties": {
+                    "user": {
+                        "type": "string"
+                    },
+                    "banner": {
+                        "type": "string"
+                    },
+                    "title": {
+                        "type": "string"
+                    },
+                    "text": {
+                        "type": "string"
+                    },
+                    "likes": {
+                        "type": "array"
+                    },
+                    "comments": {
+                        "type": "array"
+                    },
+                    "createdAt": {
+                        "type": "date"
+                    }
                 }
             }
         }
