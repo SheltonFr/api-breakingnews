@@ -197,7 +197,7 @@ const deleteById = async (req, res) => {
   try {
     const id = req.id;
     await newsService.deleteById(id);
-    res.send({ message: "News deleted successfully!" });
+    res.status(204).send({ message: "News deleted successfully!" });
   } catch (error) {
     return res.status(500).send({ message: error.message });
   }
