@@ -40,7 +40,7 @@ UserSchema.pre('save', async function (next) {
     this.password = await bcrypt.hash(this.password, 10);
 
 
-    /*  A Criptografia leve certo tempo, porem é necessario que ela termine, para poder se efectuar 
+    /*  A Criptografia leva certo tempo, porem é necessario que ela termine, para poder se efectuar 
     a persistencia do registro na base de dados. ou seja, é uma funcao assincrona, que deve ser concluida
     antes de se realizar o proimo passo(salvar)*/
 
